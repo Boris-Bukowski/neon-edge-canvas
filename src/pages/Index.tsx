@@ -6,8 +6,9 @@ import { BlogPreview } from "@/components/BlogPreview";
 import { ProjectPreview } from "@/components/ProjectPreview";
 import { PhotoPreview } from "@/components/PhotoPreview";
 import { AboutSection } from "@/components/AboutSection";
-import { Footer } from "@/components/Footer";
+import { EnhancedFooter } from "@/components/EnhancedFooter";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ScrollAnimation } from "@/components/ScrollAnimation";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -42,22 +43,30 @@ const Index = () => {
         </section>
 
         <section id="blogs" className="py-20">
-          <BlogPreview />
+          <ScrollAnimation animation="fade-in">
+            <BlogPreview />
+          </ScrollAnimation>
         </section>
 
         <section id="projects" className="py-20">
-          <ProjectPreview />
+          <ScrollAnimation animation="fade-in">
+            <ProjectPreview />
+          </ScrollAnimation>
         </section>
 
         <section id="photography" className="py-20">
-          <PhotoPreview />
+          <ScrollAnimation animation="fade-in">
+            <PhotoPreview />
+          </ScrollAnimation>
         </section>
 
         <section id="about" className="py-20">
-          <AboutSection />
+          <ScrollAnimation animation="fade-in">
+            <AboutSection />
+          </ScrollAnimation>
         </section>
 
-        <Footer />
+        <EnhancedFooter />
       </div>
     </ThemeProvider>
   );

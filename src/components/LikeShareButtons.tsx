@@ -57,50 +57,94 @@ export const LikeShareButtons = ({ postId, initialLikes, title, url }: LikeShare
     <div className="flex items-center gap-3">
       <button
         onClick={handleLike}
-        className={`flex items-center gap-2 px-3 py-1 rounded-full transition-all duration-200 ${
+        className={`flex items-center gap-2 px-3 py-1 rounded-full transition-all duration-300 transform hover:scale-105 ${
           isLiked 
-            ? 'text-pink-400 bg-pink-400/10' 
+            ? 'text-pink-400 bg-pink-400/20 shadow-lg shadow-pink-400/20' 
             : 'text-gray-400 hover:text-pink-400 hover:bg-pink-400/10'
         }`}
       >
-        <Heart size={16} className={isLiked ? 'fill-current' : ''} />
+        <Heart size={16} className={`transition-transform duration-200 ${isLiked ? 'fill-current scale-110' : ''}`} />
         <span className="text-sm font-medium">{likes}</span>
       </button>
 
       <div className="relative">
         <button
           onClick={() => setShowShareMenu(!showShareMenu)}
-          className="flex items-center gap-2 px-3 py-1 text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/10 rounded-full transition-all duration-200"
+          className={`flex items-center gap-2 px-3 py-1 rounded-full transition-all duration-300 transform hover:scale-105 ${
+            showShareMenu 
+              ? 'text-cyan-400 bg-cyan-400/20 shadow-lg shadow-cyan-400/20' 
+              : 'text-gray-400 hover:text-cyan-400 hover:bg-cyan-400/10'
+          }`}
         >
-          <Share2 size={16} />
+          <Share2 size={16} className={`transition-transform duration-200 ${showShareMenu ? 'rotate-12' : ''}`} />
           <span className="text-sm font-medium">Share</span>
         </button>
 
+        {/* Backdrop for mobile */}
         {showShareMenu && (
-          <div className="absolute top-full mt-2 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-10 min-w-[160px]">
+          <div 
+            className="fixed inset-0 z-40 bg-black/20 md:hidden" 
+            onClick={() => setShowShareMenu(false)}
+          />
+        )}
+
+        {/* Share dropdown */}
+        <div className={`
+          absolute top-full mt-3 right-0 z-50 min-w-[180px] w-max
+          bg-gray-800/95 backdrop-blur-lg border border-cyan-400/30
+          rounded-xl shadow-2xl shadow-cyan-400/20
+          transition-all duration-300 transform origin-top-right
+          ${showShareMenu 
+            ? 'opacity-100 scale-100 translate-y-0' 
+            : 'opacity-0 scale-95 translate-y-2 pointer-events-none'
+          }
+          
+          /* Mobile positioning */
+          md:right-0 
+          max-md:right-0 max-md:left-auto
+          max-md:transform max-md:-translate-x-0
+        `}>
+          {/* Neon glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 to-purple-400/10 rounded-xl blur-sm -z-10" />
+          
+          {/* Arrow indicator */}
+          <div className="absolute -top-2 right-6 w-4 h-4 bg-gray-800 border-l border-t border-cyan-400/30 transform rotate-45" />
+          
+          <div className="p-2">
             <button
               onClick={copyToClipboard}
-              className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-300 
+                       hover:text-white hover:bg-gradient-to-r hover:from-cyan-400/10 hover:to-cyan-400/5
+                       rounded-lg transition-all duration-200 transform hover:scale-[1.02]
+                       group"
             >
-              <LinkIcon size={16} />
-              Copy Link
+              <LinkIcon size={16} className="group-hover:text-cyan-400 transition-colors duration-200" />
+              <span className="font-medium">Copy Link</span>
             </button>
+            
             <button
               onClick={shareOnTwitter}
-              className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-300 
+                       hover:text-white hover:bg-gradient-to-r hover:from-blue-400/10 hover:to-blue-400/5
+                       rounded-lg transition-all duration-200 transform hover:scale-[1.02]
+                       group"
             >
-              <Twitter size={16} />
-              Twitter
+              <Twitter size={16} className="group-hover:text-blue-400 transition-colors duration-200" />
+              <span className="font-medium">Twitter</span>
             </button>
+            
             <button
               onClick={shareOnLinkedIn}
-              className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-300 
+                       hover:text-white hover:bg-gradient-to-r hover:from-blue-600/10 hover:to-blue-600/5
+                       rounded-lg transition-all duration-200 transform hover:scale-[1.02]
+                       group"
             >
-              <Linkedin size={16} />
-              LinkedIn
+              <Linkedin size={16} className="group-hover:text-blue-600 transition-colors duration-200" />
+              <span className="font-medium">LinkedIn</span>
             </button>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
